@@ -28,6 +28,7 @@ exports.kiosk = {
         done();
     },
     testApp: function(test) {
+        test.expect(6);
         // index.html probing
         var indexHtml = grunt.file.read('tmp/app/index.html');
         test.ok(indexHtml.match(/(<script id\=\"grunt-kiosk-interval\")(\n|\r|.)+(<\/script>)/gi), 'Index.html has a grunt-kiosk-internal script tag');
@@ -42,6 +43,8 @@ exports.kiosk = {
         test.done();
     },
     testDist: function(test) {
+        test.expect(5);
+
         // index.html probing
         var indexHtml = grunt.file.read('tmp/dist/index.html');
         test.ok(indexHtml.match(/(<script id\=\"grunt-kiosk-interval\")(\n|\r|.)+(<\/script>)/gi), 'Index.html has a grunt-kiosk-internal script tag');
@@ -55,6 +58,8 @@ exports.kiosk = {
         test.done();
     },
     testNoApp: function(test) {
+        test.expect(2);
+
         // index.html probing
         var indexHtml = grunt.file.read('tmp/no-app/index.html');
         test.equals(grunt.file.read('test/fixtures/no-dist/index.html'), grunt.file.read('tmp/no-app/index.html'), 'Index.html file was not changed.');
@@ -64,6 +69,8 @@ exports.kiosk = {
         test.done();
     },
     testNoDist: function(test) {
+        test.expect(2);
+
         // index.html probing
         var indexHtml = grunt.file.read('tmp/no-dist/index.html');
         test.equals(grunt.file.read('test/fixtures/no-dist/index.html'), grunt.file.read('tmp/no-dist/index.html'), 'Index.html file was not changed.');
