@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             ].join('\n').replace('###', interval);
 
         if (this.data.clean) {
-            kiosk = kiosk.replace('<!-- kiosk -->', '').replace('<!-- endkiosk -->', '');
+            kiosk = kiosk.replace(/<!--\s(end)?kiosk\s-->/gi, '');
         }
 
         var process = function(dir) {
