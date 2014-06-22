@@ -44,24 +44,24 @@ module.exports = function(grunt) {
             testApp: {
                 dest: 'tmp/app',
                 interval: 8001,
-                version: 'test',
-                init: true
+                version: 'test'
             },
             testNoApp: {
                 dest: 'tmp/no-app',
                 interval: 8002,
-                version: 'test',
-                init: true
+                version: 'test'
             },
             testDist: {
                 dest: 'tmp/dist',
                 interval: 8003,
-                version: 'test'
+                version: 'test',
+                clean: true
             },
             testNoDist: {
                 dest: 'tmp/no-dist',
                 interval: 8004,
-                version: 'test'
+                version: 'test',
+                clean: true
             }
         },
 

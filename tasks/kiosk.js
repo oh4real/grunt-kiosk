@@ -22,16 +22,17 @@ module.exports = function(grunt) {
                 'currentKioskVersion = currentKioskVersion || loadedKioskVersion',
                 'currentKioskVersion !== loadedKioskVersion && window.location.reload()'
             ].join('\n').replace('###', rev),
-            kiosk = ['<script id="grunt-kiosk-interval" type="text/javascript">',
+            kiosk = [
+                '<!-- kiosk --><script id="grunt-kiosk-interval" type="text/javascript">',
                 '!function(){console.log("initiating grunt-kiosk version monitoring");window.setInterval(function(){var e=document.getElementById("grunt-kiosk")',
                 'e&&document.getElementsByTagName("body")[0].removeChild(e)',
                 'var t=document.createElement("script")',
                 't.id="grunt-kiosk",t.src="grunt-kiosk-version.js",t.type="text/javascript",document.getElementsByTagName("body")[0].appendChild(t)},###)}()',
-                '</script>'
+                '</script><!-- endkiosk -->'
             ].join('\n').replace('###', interval);
 
-        if (this.data.init) {
-            kiosk = '<!-- kiosk -->' + kiosk + '<!-- endkiosk -->';
+        if (this.data.clean) {
+            kiosk = kiosk.replace('<!-- kiosk -->', '').replace('<!-- endkiosk -->', '');
         }
 
         var process = function(dir) {

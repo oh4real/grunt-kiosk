@@ -24,62 +24,131 @@ In your project's Gruntfile, add a section named `kiosk` to the data object pass
 
 ```js
 grunt.initConfig({
-  kiosk: {
-    options: {
-      // Task-specific options go here.
+    kiosk: {
+        options: {},
+        app: {
+            dest: '<%= yeoman.app %>',
+            interval: 5000,
+            version: 0
+        },
+        dist: {
+            dest: '<%= yeoman.dist %>',
+            interval: 3600 * 1000,
+            version: 1.1,
+            clean: true
+        }
     },
-    your_target: {
-      // Target-specific file lists and/or options go here.
-    },
-  },
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.dest
 Type: `String`
-Default value: `',  '`
+Default value: `'app'`
 
-A string value that is used to do something with whatever.
+A string value that is used to do define the path the index.html you want modified. This is typically set to 'app' or 'dist'. Maybe 'build' if your build has that staging area.
 
-#### options.punctuation
+### options.version
 Type: `String`
-Default value: `'.'`
+Default value: `'0'`
+Argument: First optional argument when calling the task.
 
-A string value that is used to do something else with whatever else.
+A string value that you can use to indicate a major change and is primarily for internal consumption. The plugin will append a millisecond timestamp to the end of this property.
+
+If this option is passed in as first argument, it will override all initConfig options set:
+
+```
+  grunt kiosk:target:MY_REV
+```
+
+### options.clean
+Type: `Boolean`
+Default: false
+
+When set to true, the plugin will scrub the `<!-- kiosk -->...<!-- endkiosk -->` wrapping comment blocks. This is how you can clean up a dist version to reduce size.  
+
+Since the wrapping comment blocks are needed for targeting, the plugin will not work if set clean to true on app/index.html.
+
+#### options.interval
+Type: `Integer` as milliseconds
+Default value: `3600000` or one hour
+Argument: Second optional argument when calling the task.
+
+This is used to set the interval between version checks. If this option is passed in as second argument, it will override all initConfig options set
+
+```
+  // check every 60 seconds 
+  grunt kiosk:target::60000
+```
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
-
-```js
-grunt.initConfig({
-  kiosk: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+You may set default options that all targets can inherit.
 
 ```js
 grunt.initConfig({
   kiosk: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+            dest: 'app',
+            interval: 8675,
+            version: 0.1,
+            clean: false
+          },
+    target1: {
+       {
+            dest: 'alt-app',
+            version: 'a',
+            clean: true
+          },
     },
   },
 });
+```
+
+The final option values used above for target1 would be:
+```js
+      {
+        dest: 'alt-app',
+        interval: 8675,
+        version: 'a',
+        clean: true
+      }
+```
+NOTE: version and interval can be further overridden when specified on execution: grunt kiosk:target4:0.2.3:9999
+
+### Initializing the plugin in your SPA's index.html
+
+You are required to add the kiosk comment block to the `<head>` or `<body>` element for the inline script to be added. Then you should run the kiosk task to get the script tag inserted in your source index.html as well as adding a grunt-kiosk-version.js file.  
+
+While running the kiosk plugin on app is not required to run, it is advised to insure there are no namespace or other conflicts.
+
+1. (Required) Add the following to the index.html head or body tags.
+```html
+<head>
+<!-- kiosk --><!-- endkiosk -->
+</head>
+```
+2. (Optional, but strongly recommended) Run the kiosk task with a short interval. The interval can be set when you run it or as a config.
+```shell
+grunt kiosk:app:MY_REV:5000
+```
+
+#### Implementing plugin on 'grunt build'
+
+Assuming you added a kiosk.dist to the initConfig with dest set to your dist directory, simply add `kiosk:dist` to your build task like so:
+
+```js
+    grunt.registerTask('build', [
+        'clean:dist',
+        ...
+        'copy:dist',
+        'kiosk:dist',
+        'cdnify',
+        'cssmin',
+        ...
+    ]);
 ```
 
 ## Contributing
