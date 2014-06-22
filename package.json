@@ -1,0 +1,42 @@
+{
+    "name": "grunt-kiosk",
+    "description": "Use this Grunt plugin to enable auto-refresh for apps running in kiosk mode when a new version is published.",
+    "version": "0.1.0",
+    "homepage": "https://github.com/oh4real/grunt-kiosk",
+    "author": {
+        "name": "David Byrd",
+        "email": "byrd.dave@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/oh4real/grunt-kiosk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/oh4real/grunt-kiosk/issues"
+    },
+    "licenses": [{
+        "type": "MIT",
+        "url": "https://github.com/oh4real/grunt-kiosk/blob/master/LICENSE-MIT"
+    }],
+    "engines": {
+        "node": ">= 0.8.0"
+    },
+    "scripts": {
+        "test": "grunt test"
+    },
+    "devDependencies": {
+        "grunt-contrib-jshint": "^0.9.2",
+        "grunt-contrib-clean": "^0.5.0",
+        "grunt-contrib-nodeunit": "^0.3.3",
+        "grunt-contrib-copy": "~0.4.1",
+        "grunt": "~0.4.5",
+        "jshint-stylish": "~0.1.5",
+        "load-grunt-tasks": "~0.3.0"
+    },
+    "peerDependencies": {
+        "grunt": "~0.4.5"
+    },
+    "keywords": [
+        "gruntplugin"
+    ]
+}
