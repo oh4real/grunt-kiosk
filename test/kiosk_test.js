@@ -21,7 +21,7 @@ var grunt = require('grunt');
     test.doesNotThrow(block, [error], [message])
     test.ifError(value)
 */
-var versionRegex = /(currentKioskVersion \= currentKioskVersion \|\| loadedKioskVersion)(\n|\r|.)*?(currentKioskVersion \!\=\= loadedKioskVersion \&\& window\.location\.reload\(\))/gi;
+var versionRegex = /(currentKioskVersion \= currentKioskVersion \|\| loadedKioskVersion)(\n|\r|.)*?(currentKioskVersion \!\=\= loadedKioskVersion \&\& window\.location\.reload\(true\))/gi;
 exports.kiosk = {
     setUp: function(done) {
         // setup here if necessary

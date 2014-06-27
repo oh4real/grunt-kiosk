@@ -20,7 +20,7 @@ module.exports = function(grunt) {
                 '"use strict"',
                 'var loadedKioskVersion = "###",',
                 'currentKioskVersion = currentKioskVersion || loadedKioskVersion',
-                'currentKioskVersion !== loadedKioskVersion && window.location.reload()'
+                'currentKioskVersion !== loadedKioskVersion && window.location.reload(true)'
             ].join('\n').replace('###', rev),
             kiosk = [
                 '<!-- kiosk --><script id="grunt-kiosk-interval" type="text/javascript">',
